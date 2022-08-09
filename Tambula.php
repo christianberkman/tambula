@@ -22,10 +22,10 @@ class Tambula{
 	 */
 	 private	$defaultRoute,			// Default / fallback route
 	 			$requestUrl,			// Request URL
+				$language;				// detected language
 	  			$requestPath, 			// path via parseUrl();
 				$requestQuery, 			// query via parseUrl();
 				$routes,				// route array
-				$language;				// detected language
 	
 	/**
 	 * Constructor
@@ -60,7 +60,7 @@ class Tambula{
 	 * @param string $url URL to parse, null for REQUEST_URI
 	 * @return void
 	 */
-	public function setRequerstUrl(string $url = null){
+	public function setRequerstUrl(string $url){
 		$this->requestUrl = $url;
 		$parsedUrl = parse_url($url);
 		
@@ -72,7 +72,7 @@ class Tambula{
 	}
 
 	/**
-	 * Set or detect browser language
+	 * Set the language property
 	 * @param string $language Language to set, null for auto-detect
 	 * @return void
 	 */
@@ -108,7 +108,7 @@ class Tambula{
 
 	/**
 	 * Find route in $this->route
-	 * @param bool $regexMatch perform regex matching after normal search
+	 * @param bool $doRegex perform regex matching after normal search
 	 * @return null|string null on no route, string on single route, array on multilingual route
 	 */
 	public function findRoute($doRegex = true){
@@ -164,7 +164,7 @@ class Tambula{
 	} #
 
 	/**
-	 * Find language key, wildcard or fallback and return single array element
+	 * Find language key, wildcard or fallback and return single array element (string)
 	 * @param array $route Routes defined for each language
 	 * @return string
 	 */
@@ -185,7 +185,7 @@ class Tambula{
 	}
 
 	/**
-	 * Replace regex groups from $route into $path and append $this->requestQuery
+	 * Replace regex groups from the request url into the route and appends $this->requestQuery
 	 * @param string $path Path defined in routes
 	 * @param string $route Route defined in routes
 	 * @return string compiled route with appended query
