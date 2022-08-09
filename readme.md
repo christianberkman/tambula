@@ -1,11 +1,13 @@
 # Tambula Simple Redirect Class
 Tambula is a simple redirect class written in PHP that allows URL redirects stored in JSON files with multilingual capabilities. Written as a code excercise and for a specific redirect situation.
 
+This class was written for a specific situation where the only functionality needed was redirecting but .htaccess had some limitations. This class is not written to integrate with any other framework or platform. It runs as the only thing on a (sub)domain, e.g. `go.mydomain.com/shortlink`  
+
 ## Requirements
-Webserver that routes all requests to `index.php`, the `Tambula.php` class file and at least one JSON file with routes.
+Webserver that routes all requests to `index.php`, the `Tambula.php` class file and at least one JSON file with routes readable by the class script.
 
 ## JSON file with routes
-The JSON file is a simple array with paths and routes. For each path multiple routes can be listed depending on the language.
+The JSON file is a simple array with paths and routes. For each path multiple routes can be listed depending on the language. `*`  is used as the default route in case there is no route for the language specified.
 ```json
 {
     "path/as/given/in/browser": "route/to/redirect",
@@ -18,6 +20,8 @@ The JSON file is a simple array with paths and routes. For each path multiple ro
     }
 }
 ````
+
+JSON file may be kept out of the public accessible folders if desired, however it proably will contain public information anyway.
 
 ## How to use
 ### Short form
@@ -43,7 +47,7 @@ For a more advanced example see the provided `index-advanced.php` file included 
 
 ## Public methods
 ### class constructor
-The class constructor sets `$requestUrl` to `$_SERVER['REQUEST_URI'] and sets the language from `$_SERVER['HTTP_ACCEPT_LANGUAGE']` but otherwise peforms no actions.
+The class constructor sets `$requestUrl` to `$_SERVER['REQUEST_URI']` and sets the language from `$_SERVER['HTTP_ACCEPT_LANGUAGE']` but otherwise peforms no actions.
 
 ### setDefaultRoute
 * string `$route` default route
