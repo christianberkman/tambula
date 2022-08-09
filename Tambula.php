@@ -22,10 +22,10 @@ class Tambula{
 	 */
 	 private	$defaultRoute,			// Default / fallback route
 	 			$requestUrl,			// Request URL
-				$language;				// detected language
+				$language,				// detected language
 	  			$requestPath, 			// path via parseUrl();
 				$requestQuery, 			// query via parseUrl();
-				$routes,				// route array
+				$routes;				// route array
 	
 	/**
 	 * Constructor
