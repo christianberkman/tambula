@@ -60,7 +60,7 @@ class Tambula{
 	 * @param string $url URL to parse, null for REQUEST_URI
 	 * @return void
 	 */
-	public function setRequerstUrl(string $url){
+	public function setRequestUrl(string $url){
 		$this->requestUrl = $url;
 		$parsedUrl = parse_url($url);
 		
