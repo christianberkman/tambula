@@ -1,0 +1,21 @@
+{
+    "/":
+    {
+        "*": "https://english.mydomain.com/",
+        "nl": "https://dutch.mydomain.com/"
+    },
+
+    "/nl": "https://dutch.mydomain.com/",
+    "/nl/": "https://dutch.mydomain.com/",
+    "/nl/(.*)": "https://dutch.mydomain.com/$1",
+
+    "/en": "https://english.mydomain.com/",
+    "/en/": "https://english.mydomain.com/",
+    "/en/(.*)": "https://english.mydomain.com/$1",
+
+    "/login":
+    {
+        "*": "https://english.mydomain.com/login",
+        "nl": "https://dutch.mydomain.com/inloggen"
+    }
+}
