@@ -20,7 +20,7 @@ if($route != null) $tambula->redirect($route, 301);
 
 // If no route is found, find 302 routes
 $tambula->loadRoutesFromJson('302-routes.jsoon', FALSE); // replace all routes
-if($route != null) $tambula->redirect($route, 302);
+if(!is_null($route)) $tambula->redirect($route, 302);
 
 // No route found
 http_response_code(404);

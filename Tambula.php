@@ -76,7 +76,7 @@ class Tambula{
 	 * @param string $language Language to set, null for auto-detect
 	 * @return void
 	 */
-	public function setLanguage(string $language = null){
+	public function setLanguage(string $language){
 		$this->language = strtolower(substr($language, 0, 2));
 	}
 
@@ -95,7 +95,7 @@ class Tambula{
 
 		// Decode json
 		$decodedJson = json_decode($fileContents, TRUE);
-		if($decodedJson == null) throw new Exception('Json file seems invalid');
+		if(is_null($decodedJson)) throw new Exception('Json file seems invalid');
 
 		// Store to $this->routes
 		if($append){	# Append
