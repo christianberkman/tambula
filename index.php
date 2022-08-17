@@ -20,4 +20,5 @@ $tambula->setDefaultRoute('https://www.mydomain.com/');
 $tambula->loadRoutesFromJson('routes.json');
 
 // Find route and redirect
+$tambula->enableDebug("debug=true");
 $tambula->go();

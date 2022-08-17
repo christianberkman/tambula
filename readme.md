@@ -113,6 +113,10 @@ All properties are private but can be accessed via `__get()`
 * string `$countryCode` Country code result from geoplugin.net query
 * array `$geoPlugin` Results of geoplugin.net query, set by `findCountryCode()`
 
+* bool `$enableDebug` Sets if debugging is allowed via `enableDebug()`
+* string `$debugFlag` Debug flag (.e.g. `/my-url?debug=true`)
+* int `$debugStart` microtime at class constructor
+
 ## Private functions
 `filterRoute` Filter the route, find wildcard or fallback and return single array element (string)
 `compileRoute` Replace regex groups from the request url into the route and appends $this->requestQuery

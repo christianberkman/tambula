@@ -31,6 +31,8 @@ class Tambula{
 				$countryCode,			// country Code
 				$geoPlugin = [],		// results from geoplugin.net
 
+				$enableDebug = false,			// enable debug instead of redirect
+				$debugFlag = 'debug=true',		// debug flag
 				$debugStart;
 	
 	/**
@@ -209,6 +211,11 @@ class Tambula{
 	 * @return void
 	 */
 	public function redirect(string $route, int $code = 301){
+		// Show debug if enabled and query equals the flag
+		if($this->enableDebug){
+			if($this->requestQuery == $this->debugFlag) $this->showDebug();
+		}
+		
 		header("Location: {$route}", TRUE, $code);
 		exit();
 	}
@@ -261,5 +268,22 @@ class Tambula{
 	 */
 	public function execTime(){
 		return microtime() - $this->debugStart;
+	}
+
+	/**
+	 * Enable debug flag
+	 * @param string $debugFlag Debug flag to trigger debug view
+	 */
+	public function enableDebug(string $debugFlag){ 
+		$this->enableDebug = true; 
+		$this->debugFlag = $debugFlag;
+	}
+
+	/**
+	 * Require the debug.php file and stop all execution
+	 */
+	private function showDebug(){
+		require_once 'debug.php';
+		exit;
 	}
 }

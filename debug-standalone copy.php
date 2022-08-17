@@ -6,6 +6,20 @@
  * Debug file
  * You may want to keep this away from the public
  */
+
+ use Tambula\Tambula;
+ require 'Tambula.php';
+ $tambula = new Tambula();
+
+// ---- YOUR CODE BELOW THIS LINE ---- //
+$tambula->setRequestUrl('/login');
+$tambula->findCountryCode('41.153.64.4');
+$tambula->setDefaultRoute('https://default-route.local');
+$tambula->loadRoutesFromJson('routes.json');
+
+$tambula->setFilters( $tambula->findLanguageCodes() );
+
+// ---- OUR CODE BELOW THIS LINE ---- //
 ?>
 <html>
     <head>
@@ -15,14 +29,11 @@
     <body>
         <h1>Tambula Debug Page</h1>
 
-        <h2>requestUrl</h2>
-        <?=$this->requestUrl;?>
-
         <h2>findRoute()</h2>
-        <?php var_dump($this->findRoute()); ?>
+        <?php var_dump($tambula->findRoute()); ?>
 
         <h2>Execution Time</h2>
-        <?=$this->execTime();?> ms
+        <?=$tambula->execTime();?> ms
 
         <h2>Class Properties</h2>
         <table border="1">
@@ -37,7 +48,7 @@
         ?>
             <tr>
                 <td><?=$property;?></td>
-                <td><pre><?php var_dump($this->$property);?></pre></td>
+                <td><pre><?php var_dump($tambula->$property);?></pre></td>
             </tr>
         <?php endforeach; ?>
     </table>
