@@ -20,7 +20,7 @@ class Tambula{
 	 * $routes are set via loadRoutesfromJson()
 	 * 
 	 */
-	 private	$defaultRoute,			// Default / fallback route
+	 private	$defaultRoute = null,	// Default / fallback route
 	 			$requestUrl,			// Request URL
 				$requestPath, 			// path via parseUrl();
 				$requestQuery, 			// query via parseUrl();
@@ -153,8 +153,8 @@ class Tambula{
 			} # if()
 		} # foreach()
 
-		// No route found
-		return null;
+		// No route found, return default route
+		return $this->defaultRoute;
 	} #
 
 	/**
