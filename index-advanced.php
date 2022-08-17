@@ -12,6 +12,7 @@ require 'Tambula.php';
 
 // Load Tambula Class
 $tambula = new Tambula();
+$tambula->enableDebug("debug=true");
 
 // Find 301 routes
 $tambula->loadRoutesFromJson('301-routes.json');

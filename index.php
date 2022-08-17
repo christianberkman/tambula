@@ -20,6 +20,5 @@ $tambula->setDefaultRoute('https://www.mydomain.com/');
 $tambula->loadRoutesFromJson('routes.json');
 
 // Find route and redirect
-#$tambula->findCountryCode('41.150.22.1');
-$tambula->enableDebug("debug=true");
+#$tambula->enableDebug("debug=true");
 $tambula->go();
