@@ -12,6 +12,7 @@ require 'Tambula.php';
 
 // Load Tambula Class
 $tambula = new Tambula();
+$tambula->enableDebug("debug=true");
 
 // Set default / fallback route
 $tambula->setDefaultRoute('https://www.mydomain.com/');
@@ -19,6 +20,8 @@ $tambula->setDefaultRoute('https://www.mydomain.com/');
 // Load routes from json
 $tambula->loadRoutesFromJson('routes.json');
 
+// Apply language filter
+$tambula->setFilters( $tambula->findLanguageCodes(true) );
+
 // Find route and redirect
-#$tambula->enableDebug("debug=true");
 $tambula->go();
