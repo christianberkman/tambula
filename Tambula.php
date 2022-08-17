@@ -25,10 +25,11 @@ class Tambula{
 				$requestPath, 			// path via parseUrl();
 				$requestQuery, 			// query via parseUrl();
 				$routes,				// route array
-				$filter,				// array of filters to apply
-				$languageCode,			// detected language
+				
+				$languageCodes,
 				$geoPlugin,				// results from geoplugin.net
-				$countryCode;			// country Code
+				$countryCode,			// country Code
+				$filters = [];			// array of filters to apply
 	
 	/**
 	 * Constructor
@@ -36,7 +37,6 @@ class Tambula{
 	 */
 	public function __construct(){	
 		$this->setRequestUrl($_SERVER['REQUEST_URI']);
-		$this->setLanguage($_SERVER['HTTP_ACCEPT_LANGUAGE']);
 	}
 
 	/**
@@ -75,12 +75,22 @@ class Tambula{
 	}
 
 	/**
-	 * Set the language property
-	 * @param string $language Language to set, null for auto-detect
-	 * @return void
+	 * Find language codes from browser
+	 * @param bool $findFirst Only use first language code
+	 * @return array Found language code(s)
 	 */
-	public function setLanguage(string $language){
-		$this->languageCode = strtolower(substr($language, 0, 2));
+	public function findLanguageCodes(bool $findFirst = false){
+		// Find all two letter language codes in HTTP_ACCEPT_LANGUAGE string
+		$acceptedLang = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
+		$pattern = '/,([a-z]{2})/';
+		preg_match_all($pattern, $acceptedLang, $matches);
+
+		// Find only first
+		if($findFirst) $this->languageCodes = [$matches[1][0]];
+		else $this->languageCodes = $matches[1];
+		
+		// Return language codes
+		return $this->languageCodes;
 	}
 
 	/**

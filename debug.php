@@ -16,8 +16,7 @@ $tambula->setRequestUrl('/login');
 $tambula->setDefaultRoute('https://default-route.local');
 $tambula->loadRoutesFromJson('routes.json');
 
-
-$tambula->setFilters(['fr', 'nl']);
+$tambula->setFilters( $tambula->findLanguageCodes() );
 
 // ---- OUR CODE BELOW THIS LINE ---- //
 ?>
@@ -39,7 +38,7 @@ $tambula->setFilters(['fr', 'nl']);
                 <td><b>Value</b></td>
             </tr>
         <?php 
-            $properties = ['defaultRoute', 'requestUrl', 'languageCode', 'geoPlugin', 'countryCode', 'requestPath', 'requestQuery', 'filter', 'routes'];
+            $properties = ['defaultRoute', 'requestUrl', 'languageCodes', 'geoPlugin', 'countryCode', 'requestPath', 'requestQuery', 'filters', 'routes'];
 
             foreach($properties as $property):
         ?>

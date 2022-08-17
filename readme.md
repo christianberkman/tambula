@@ -1,5 +1,5 @@
 # Tambula Simple Redirect Class
-Tambula is a simple redirect class written in PHP that allows URL redirects stored in JSON files with multilingual capabilities. Written as a code excercise and for a specific redirect situation.
+Tambula is a simple redirect class written in PHP that allows URL redirects stored in JSON files with filter capabilities. Written as a code excercise and for a specific redirect situation.
 
 This class was written for a specific situation where the only functionality needed was redirecting but .htaccess had some limitations. This class is not written to integrate with any other framework or platform. It runs as the only thing on a (sub)domain, e.g. `go.mydomain.com/shortlink`  
 
@@ -7,16 +7,23 @@ This class was written for a specific situation where the only functionality nee
 Webserver that routes all requests to `index.php`, the `Tambula.php` class file and at least one JSON file with routes readable by the class script.
 
 ## JSON file with routes
-The JSON file is a simple array with paths and routes. For each path multiple routes can be listed depending on the language. `*`  is used as the default route in case there is no route for the language specified.
+The JSON file is a simple array with paths and routes. For each path multiple routes can be listed depending on a filter, such as the language or country code. `*`  is used as the default route in case there is no route for the language specified. As a fall back the first route in will be used.
 ```json
 {
     "path/as/given/in/browser": "route/to/redirect",
 
-    "welcome":
+    "filter-by-language":
     {
         "*": "my/global/page",
         "nl": "my/dutch/page",
         "fr": "my/fr/page"
+    },
+
+    "filter-by-country-code":
+    {
+        "*": "my/global/page",
+        "US": "my/us/page",
+        "UK": "my/uk/page"
     }
 }
 ````
@@ -39,8 +46,11 @@ $tambula->setDefaultRoute('https://www.mydomain.com/');
 // Load routes from json
 $tambula->loadRoutesFromJson('routes.json');
 
+// Apply a filter
+$tambula->setFilters( $tambula->findLanguageCodes() );
+
 // Find route and redirect
-$tambula->go();
+$tambula->go(); // shorthand for $tambula->redirect( $tambula->findRoute() );
 ```
 
 For a more advanced example see the provided `index-advanced.php` file included in this repository.
@@ -57,9 +67,9 @@ Set the default route if no other route if found
 * string `$url` url
 Parses the provided url and sets `$this->requestUrl`, `$this->requestPath` and `$this->requestQuery`. The class constructor calls this method with `$_SERVER['REQUEST_URI']`
 
-### setLanguage
-* string `$language` two letter language code or browsers accepted language string
-Sets `$this->language` to the first two characters of the `$language` provided. The class constructor calls this method with `$_SERVER['HTTP_ACCEPTED_LANGUAGE']`
+### findLanguageCodes
+* bool `$findFirst` Find only the first language code
+Find all (or the first) two letter language codes from `$_SERVER['HTTP_ACCEPT_LANG']`
 
 ### findCountryCode
 * string `$ip` Ip address, default is `$_SERVER['REMOTE_ADDR']`
