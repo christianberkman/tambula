@@ -128,31 +128,11 @@ class Tambula{
 	 * @param bool $doRegex perform regex matching after normal search
 	 * @return null|string null on no route, string on single route, array on multilingual route
 	 */
-	public function findRoute($doRegex = true){
+	public function findRoute(){
 		// Return null if $this->routes is not an array
 		if(!is_array($this->routes)) return null;
 		
-		// Simple Check
-		if(!$doRegex){
-			// Check if array key exists
-			if(array_key_exists($this->requestPath, $this->routes)){
-				// Single language route
-				// Array element is a string
-				// return single string
-				return $this->appendQuery($this->routes[$this->requestPath]);
-
-				// Multilingual route
-				// Array element is an array
-				// Find language key
-				$languageRoute = $this->filterRoute($routes[$this->requestPath]);
-				return $this->appendQuery($languageRoute);
-			}
-
-			// No match, return null
-			return null;
-		}
-		
-		// Regex Check
+		// Loop through all routes
 		foreach($this->routes as $path => $route){	# Loop through array
 			$pathEscaped= str_replace('/', '\/', $path);
 			$pathPattern = '/^'. $pathEscaped .'$/';

@@ -76,7 +76,6 @@ Loads routes from a specified json file. If `$append` is true the contents will 
 Stores the filter to be applied as an array
 
 ### findRoute
-* bool `$doRegex` find routes using regex matching
 * return null|string found route
 Finds the route in the route list or returns `null` if not found any
 
