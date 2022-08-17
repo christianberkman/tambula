@@ -40,6 +40,7 @@ class Tambula{
 	 * @return void
 	 */
 	public function __construct(){	
+		$this->debugStart = microtime();
 		$this->setRequestUrl($_SERVER['REQUEST_URI']);
 	}
 
@@ -267,7 +268,7 @@ class Tambula{
 	 * @return int Execution time in milliseconds
 	 */
 	public function execTime(){
-		return microtime() - $this->debugStart;
+		return (microtime() - $this->debugStart) * 1000000;
 	}
 
 	/**
