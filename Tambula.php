@@ -29,7 +29,9 @@ class Tambula{
 				
 				$languageCodes = [],	// language code(s) from HTTP_ACCEPT_LANG
 				$countryCode,			// country Code
-				$geoPlugin = [];		// results from geoplugin.net
+				$geoPlugin = [],		// results from geoplugin.net
+
+				$debugStart;
 	
 	/**
 	 * Constructor
@@ -251,5 +253,13 @@ class Tambula{
 		$this->geoPlugin = $geoPlugin;
 		$this->countryCode = $geoPlugin['geoplugin_countryCode'];
 		return $this->countryCode;
+	}
+
+	/**
+	 * Report execution time
+	 * @return int Execution time in milliseconds
+	 */
+	public function execTime(){
+		return microtime() - $this->debugStart;
 	}
 }

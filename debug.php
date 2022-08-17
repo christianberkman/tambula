@@ -13,6 +13,7 @@
 
 // ---- YOUR CODE BELOW THIS LINE ---- //
 $tambula->setRequestUrl('/login');
+$tambula->findCountryCode('41.153.64.4');
 $tambula->setDefaultRoute('https://default-route.local');
 $tambula->loadRoutesFromJson('routes.json');
 
@@ -30,6 +31,9 @@ $tambula->setFilters( $tambula->findLanguageCodes() );
 
         <h2>findRoute()</h2>
         <?php var_dump($tambula->findRoute()); ?>
+
+        <h2>Execution Time</h2>
+        <?=$tambula->execTime();?> ms
 
         <h2>Class Properties</h2>
         <table border="1">

@@ -97,6 +97,9 @@ Find all (or the first) two letter language codes from `$_SERVER['HTTP_ACCEPT_LA
 Finds the two letter country code provided by `geoplugin.net`
 Returns `string|null`.
 
+### execTime
+Report the execution time in milliseconds
+
 ## Properties
 All properties are private but can be accessed via `__get()`
 * string `$defaultRoute` the default / fallback route, set by `setDefaultRoute()`
