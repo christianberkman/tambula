@@ -72,8 +72,9 @@ class Tambula{
 		$this->requestUrl = $url;
 		$parsedUrl = parse_url($url);
 		
-		// Path
-		$this->requestPath = $parsedUrl['path'];
+		// Path, if path is not '/', remove trailing slash
+		if($parsedUrl['path'] != '/') $this->requestPath = rtrim($parsedUrl['path'], "/");
+		else $this->requestPath = '/';		
 
 		// Query
 		if(array_key_exists('query', $parsedUrl)) $this->requestQuery = $parsedUrl['query'];
