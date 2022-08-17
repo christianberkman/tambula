@@ -22,7 +22,7 @@ class Tambula{
 	 */
 	 private	$defaultRoute,			// Default / fallback route
 	 			$requestUrl,			// Request URL
-				$language,				// detected language
+				$languageCode,			// detected language
 				$geoPlugin,				// results from geoplugin.net
 				$countryCode,			// country Code
 	  			$requestPath, 			// path via parseUrl();
@@ -129,7 +129,7 @@ class Tambula{
 				// Multilingual route
 				// Array element is an array
 				// Find language key
-				$languageRoute = $this->findLanguageKey($routes[$this->requestPath]);
+				$languageRoute = $this->findLanguageCode($routes[$this->requestPath]);
 				return $this->appendQuery($languageRoute);
 			}
 
@@ -155,7 +155,7 @@ class Tambula{
 				// $route is an array
 				// Find language key, return single string
 				if(is_array($route)){
-					$languageRoute = $this->findLanguageKey($route);
+					$languageRoute = $this->findLanguageCode($route);
 					return $this->compileRoute($pathPattern, $languageRoute);
 				}
 			} # if()
@@ -170,7 +170,7 @@ class Tambula{
 	 * @param array $route Routes defined for each language
 	 * @return string
 	 */
-	private function findLanguageKey(array $route){
+	private function findLanguageCode(array $route){
 		// Search for language
 		if(array_key_exists($this->language, $route)){
 			return $route[$this->language];

@@ -86,11 +86,13 @@ All properties are private but can be accessed via `__get()`
 * string `$defaultRoute` the default / fallback route, set by `setDefaultRoute()`
 * string `$requestUrl` the given request url, set by setRequestUrl()
 * string `$requestPath` path portion of the request url, cannot be set from outside class
-* string `$language` language given or stored, set by `setLanguage()`
+* string `$languageCode` language given or stored, set by `setLanguage()`
+* string `$geoPlugin` Results of geoplugin.net query, set by `findCountryCode()`
+* string `$countryCode` Country code result from geoplugin.net query
 * string `$requestQuery` query portion of the request url, cannot be set from outside class
 * array `$routes` available paths and routes, set by `loadRoutesFromJson()`
 
 ## Private functions
-`findLanguageKey` Find language key, wildcard or fallback and return single array element (string)
+`findLanguageCode` Find language key, wildcard or fallback and return single array element (string)
 `compileRoute` Replace regex groups from the request url into the route and appends $this->requestQuery
 `appendQuery` Appends the request query to the route (if not null)
