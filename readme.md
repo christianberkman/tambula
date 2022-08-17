@@ -61,6 +61,11 @@ Parses the provided url and sets `$this->requestUrl`, `$this->requestPath` and `
 * string `$language` two letter language code or browsers accepted language string
 Sets `$this->language` to the first two characters of the `$language` provided. The class constructor calls this method with `$_SERVER['HTTP_ACCEPTED_LANGUAGE']`
 
+### findCountryCode
+* string `$ip` Ip address, default is `$_SERVER['REMOTE_ADDR']`
+Finds the two letter country code provided by `geoplugin.net`
+Returns `string|null`.
+
 ### loadRoutesFromJson
 * string `$file` path to accessible JSON file
 * bool `$append` append to routes

@@ -23,6 +23,8 @@ class Tambula{
 	 private	$defaultRoute,			// Default / fallback route
 	 			$requestUrl,			// Request URL
 				$language,				// detected language
+				$geoPlugin,				// results from geoplugin.net
+				$countryCode,			// country Code
 	  			$requestPath, 			// path via parseUrl();
 				$requestQuery, 			// query via parseUrl();
 				$routes;				// route array
@@ -182,6 +184,20 @@ class Tambula{
 		// Fallback: return first element in array
 		var_dump($route);
 		return array_values($route)[0];
+	}
+
+	/**
+	 * Find the client's two letter country code using it's IP address using geoplugin.net
+	 * @param string $ip Override IP address
+	 * @return string|null
+	 */
+	public function findCountryCode(string $ip = null){
+		// From geoplugin.net/quickstart
+		$url = 'http://www.geoplugin.net/php.gp?ip=' . ($ip ?? $_SERVER['REMOTE_ADDR']);
+		$geoPlugin = unserialize(file_get_contents($url));
+		$this->geoPlugin = $geoPlugin;
+		$this->countryCode = $geoPlugin['geoplugin_countryCode'];
+		return $this->countryCode;
 	}
 
 	/**
