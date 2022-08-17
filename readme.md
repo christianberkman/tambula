@@ -28,7 +28,7 @@ The JSON file is a simple array with paths and routes. For each path multiple ro
 }
 ````
 
-JSON file may be kept out of the public accessible folders if desired, however it proably will contain public information anyway.
+JSON file may be kept out of the public accessible folders if desired, however it probably will contain public information anyway.
 
 ## How to use
 ### Short form
@@ -118,6 +118,6 @@ All properties are private but can be accessed via `__get()`
 * int `$debugStart` microtime at class constructor
 
 ## Private functions
-`filterRoute` Filter the route, find wildcard or fallback and return single array element (string)
-`compileRoute` Replace regex groups from the request url into the route and appends $this->requestQuery
-`appendQuery` Appends the request query to the route (if not null)
+* `filterRoute` Filter the route, find wildcard or fallback and return single array element (string)
+* `compileRoute` Replace regex groups from the request url into the route and appends $this->requestQuery
+* `appendQuery` Appends the request query to the route (if not null)
