@@ -71,6 +71,10 @@ Returns `string|null`.
 * bool `$append` append to routes
 Loads routes from a specified json file. If `$append` is true the contents will be appended to `$this->routes` otherwise it will be replaced
 
+### setFilters
+* string|array `$filters` filter or filters to be applied
+Stores the filter to be applied as an array
+
 ### findRoute
 * bool `$doRegex` find routes using regex matching
 * return null|string found route
@@ -91,8 +95,9 @@ All properties are private but can be accessed via `__get()`
 * string `$countryCode` Country code result from geoplugin.net query
 * string `$requestQuery` query portion of the request url, cannot be set from outside class
 * array `$routes` available paths and routes, set by `loadRoutesFromJson()`
+* array `$filters` array of filters
 
 ## Private functions
-`findLanguageCode` Find language key, wildcard or fallback and return single array element (string)
+`filterRoute` Filter the route, find wildcard or fallback and return single array element (string)
 `compileRoute` Replace regex groups from the request url into the route and appends $this->requestQuery
 `appendQuery` Appends the request query to the route (if not null)

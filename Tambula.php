@@ -22,12 +22,13 @@ class Tambula{
 	 */
 	 private	$defaultRoute,			// Default / fallback route
 	 			$requestUrl,			// Request URL
+				$requestPath, 			// path via parseUrl();
+				$requestQuery, 			// query via parseUrl();
+				$routes,				// route array
+				$filter,				// array of filters to apply
 				$languageCode,			// detected language
 				$geoPlugin,				// results from geoplugin.net
-				$countryCode,			// country Code
-	  			$requestPath, 			// path via parseUrl();
-				$requestQuery, 			// query via parseUrl();
-				$routes;				// route array
+				$countryCode;			// country Code
 	
 	/**
 	 * Constructor
@@ -107,6 +108,20 @@ class Tambula{
 		}
 	}
 
+	/**
+	 * Set the filter, make an array if a single string is presented
+	 * @param string|array $filter Filter or filters to set
+	 */
+	public function setFilters($filters = null){
+		// If array, re-index array and return
+		if(is_array($filters)){
+			$this->filters = array_values($filters);
+			return;
+		}
+
+		// If not, make into an array with a single element
+		$this->filters = [$filters];
+	}
 
 	/**
 	 * Find route in $this->route
@@ -117,7 +132,7 @@ class Tambula{
 		// Return null if $this->routes is not an array
 		if(!is_array($this->routes)) return null;
 		
-		// Simple CHeck
+		// Simple Check
 		if(!$doRegex){
 			// Check if array key exists
 			if(array_key_exists($this->requestPath, $this->routes)){
@@ -129,7 +144,7 @@ class Tambula{
 				// Multilingual route
 				// Array element is an array
 				// Find language key
-				$languageRoute = $this->findLanguageCode($routes[$this->requestPath]);
+				$languageRoute = $this->filterRoute($routes[$this->requestPath]);
 				return $this->appendQuery($languageRoute);
 			}
 
@@ -155,8 +170,8 @@ class Tambula{
 				// $route is an array
 				// Find language key, return single string
 				if(is_array($route)){
-					$languageRoute = $this->findLanguageCode($route);
-					return $this->compileRoute($pathPattern, $languageRoute);
+					$filteredRoute = $this->filterRoute($route);
+					return $this->compileRoute($pathPattern, $filteredRoute);
 				}
 			} # if()
 		} # foreach()
@@ -166,15 +181,18 @@ class Tambula{
 	} #
 
 	/**
-	 * Find language key, wildcard or fallback and return single array element (string)
+	 * Filter the route, find wildcard or fallback and return single array element (string)
 	 * @param array $route Routes defined for each language
 	 * @return string
 	 */
-	private function findLanguageCode(array $route){
-		// Search for language
-		if(array_key_exists($this->languageCode, $route)){
-			return $route[$this->languageCode];
-		}
+	private function filterRoute(array $route){
+		// Loop through all elements of filters
+		foreach($this->filters as $filter){
+			// Search for filter
+			if(array_key_exists($filter, $route)){
+				return $route[$filter];
+			}
+		} # foreach
 
 		// Search for wildcard ('*')
 		if(array_key_exists('*', $route)){

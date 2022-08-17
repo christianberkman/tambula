@@ -12,11 +12,12 @@
  $tambula = new Tambula();
 
 // ---- YOUR CODE BELOW THIS LINE ---- //
-$tambula->setRequestUrl('/nl');
+$tambula->setRequestUrl('/login');
 $tambula->setDefaultRoute('https://default-route.local');
 $tambula->loadRoutesFromJson('routes.json');
-$tambula->setLanguage($_SERVER['HTTP_ACCEPT_LANGUAGE']);
-$tambula->findCountryCode('41.210.146.199');
+
+
+$tambula->setFilters(['fr', 'nl']);
 
 // ---- OUR CODE BELOW THIS LINE ---- //
 ?>
@@ -38,7 +39,7 @@ $tambula->findCountryCode('41.210.146.199');
                 <td><b>Value</b></td>
             </tr>
         <?php 
-            $properties = ['defaultRoute', 'requestUrl', 'languageCode', 'geoPlugin', 'countryCode', 'requestPath', 'requestQuery', 'routes'];
+            $properties = ['defaultRoute', 'requestUrl', 'languageCode', 'geoPlugin', 'countryCode', 'requestPath', 'requestQuery', 'filter', 'routes'];
 
             foreach($properties as $property):
         ?>
