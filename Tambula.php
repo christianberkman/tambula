@@ -24,12 +24,12 @@ class Tambula{
 	 			$requestUrl,			// Request URL
 				$requestPath, 			// path via parseUrl();
 				$requestQuery, 			// query via parseUrl();
-				$routes,				// route array
+				$routes = [],			// route array
+				$filters = [],			// array of filters to apply
 				
-				$languageCodes,
-				$geoPlugin,				// results from geoplugin.net
+				$languageCodes = [],	// language code(s) from HTTP_ACCEPT_LANG
 				$countryCode,			// country Code
-				$filters = [];			// array of filters to apply
+				$geoPlugin = [];		// results from geoplugin.net
 	
 	/**
 	 * Constructor
@@ -72,25 +72,6 @@ class Tambula{
 
 		// Query
 		if(array_key_exists('query', $parsedUrl)) $this->requestQuery = $parsedUrl['query'];
-	}
-
-	/**
-	 * Find language codes from browser
-	 * @param bool $findFirst Only use first language code
-	 * @return array Found language code(s)
-	 */
-	public function findLanguageCodes(bool $findFirst = false){
-		// Find all two letter language codes in HTTP_ACCEPT_LANGUAGE string
-		$acceptedLang = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
-		$pattern = '/,([a-z]{2})/';
-		preg_match_all($pattern, $acceptedLang, $matches);
-
-		// Find only first
-		if($findFirst) $this->languageCodes = [$matches[1][0]];
-		else $this->languageCodes = $matches[1];
-		
-		// Return language codes
-		return $this->languageCodes;
 	}
 
 	/**
@@ -195,20 +176,6 @@ class Tambula{
 	}
 
 	/**
-	 * Find the client's two letter country code using it's IP address using geoplugin.net
-	 * @param string $ip Override IP address
-	 * @return string|null
-	 */
-	public function findCountryCode(string $ip = null){
-		// From geoplugin.net/quickstart
-		$url = 'http://www.geoplugin.net/php.gp?ip=' . ($ip ?? $_SERVER['REMOTE_ADDR']);
-		$geoPlugin = unserialize(file_get_contents($url));
-		$this->geoPlugin = $geoPlugin;
-		$this->countryCode = $geoPlugin['geoplugin_countryCode'];
-		return $this->countryCode;
-	}
-
-	/**
 	 * Replace regex groups from the request url into the route and appends $this->requestQuery
 	 * @param string $path Path defined in routes
 	 * @param string $route Route defined in routes
@@ -251,5 +218,38 @@ class Tambula{
 	public function go(){
 		$route = $this->findRoute() ?? $this->defaultRoute;
 		$this->redirect($route);
+	}
+
+	/**
+	 * Find language codes from browser
+	 * @param bool $findFirst Only use first language code
+	 * @return array Found language code(s)
+	 */
+	public function findLanguageCodes(bool $findFirst = false){
+		// Find all two letter language codes in HTTP_ACCEPT_LANGUAGE string
+		$acceptedLang = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
+		$pattern = '/,([a-z]{2})/';
+		preg_match_all($pattern, $acceptedLang, $matches);
+
+		// Find only first
+		if($findFirst) $this->languageCodes = [$matches[1][0]];
+		else $this->languageCodes = $matches[1];
+		
+		// Return language codes
+		return $this->languageCodes;
+	}
+
+	/**
+	 * Find the client's two letter country code using it's IP address using geoplugin.net
+	 * @param string $ip Override IP address
+	 * @return string|null
+	 */
+	public function findCountryCode(string $ip = null){
+		// From geoplugin.net/quickstart
+		$url = 'http://www.geoplugin.net/php.gp?ip=' . ($ip ?? $_SERVER['REMOTE_ADDR']);
+		$geoPlugin = unserialize(file_get_contents($url));
+		$this->geoPlugin = $geoPlugin;
+		$this->countryCode = $geoPlugin['geoplugin_countryCode'];
+		return $this->countryCode;
 	}
 }

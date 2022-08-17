@@ -67,15 +67,6 @@ Set the default route if no other route if found
 * string `$url` url
 Parses the provided url and sets `$this->requestUrl`, `$this->requestPath` and `$this->requestQuery`. The class constructor calls this method with `$_SERVER['REQUEST_URI']`
 
-### findLanguageCodes
-* bool `$findFirst` Find only the first language code
-Find all (or the first) two letter language codes from `$_SERVER['HTTP_ACCEPT_LANG']`
-
-### findCountryCode
-* string `$ip` Ip address, default is `$_SERVER['REMOTE_ADDR']`
-Finds the two letter country code provided by `geoplugin.net`
-Returns `string|null`.
-
 ### loadRoutesFromJson
 * string `$file` path to accessible JSON file
 * bool `$append` append to routes
@@ -94,17 +85,30 @@ Finds the route in the route list or returns `null` if not found any
 * int `$code` Redirect code, default 301
 Will redirect to `$route` and exit the script.
 
+### go
+Shorthand function for ->findRoute and ->redirect() with default fallback
+
+### findLanguageCodes
+* bool `$findFirst` Find only the first language code
+Find all (or the first) two letter language codes from `$_SERVER['HTTP_ACCEPT_LANG']`
+
+### findCountryCode
+* string `$ip` Ip address, default is `$_SERVER['REMOTE_ADDR']`
+Finds the two letter country code provided by `geoplugin.net`
+Returns `string|null`.
+
 ## Properties
 All properties are private but can be accessed via `__get()`
 * string `$defaultRoute` the default / fallback route, set by `setDefaultRoute()`
 * string `$requestUrl` the given request url, set by setRequestUrl()
 * string `$requestPath` path portion of the request url, cannot be set from outside class
-* string `$languageCode` language given or stored, set by `setLanguage()`
-* string `$geoPlugin` Results of geoplugin.net query, set by `findCountryCode()`
-* string `$countryCode` Country code result from geoplugin.net query
 * string `$requestQuery` query portion of the request url, cannot be set from outside class
 * array `$routes` available paths and routes, set by `loadRoutesFromJson()`
-* array `$filters` array of filters
+* array `$filters` filters (such as language codes or country code)
+
+* array `$languageCodes` language given or stored, set by `setLanguage()`
+* string `$countryCode` Country code result from geoplugin.net query
+* array `$geoPlugin` Results of geoplugin.net query, set by `findCountryCode()`
 
 ## Private functions
 `filterRoute` Filter the route, find wildcard or fallback and return single array element (string)

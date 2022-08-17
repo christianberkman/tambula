@@ -38,7 +38,7 @@ $tambula->setFilters( $tambula->findLanguageCodes() );
                 <td><b>Value</b></td>
             </tr>
         <?php 
-            $properties = ['defaultRoute', 'requestUrl', 'languageCodes', 'geoPlugin', 'countryCode', 'requestPath', 'requestQuery', 'filters', 'routes'];
+            $properties = ['defaultRoute', 'requestUrl', 'requestPath', 'requestQuery', 'routes', 'filters', 'languageCodes', 'countryCode', 'geoPLugin'];
 
             foreach($properties as $property):
         ?>
