@@ -79,7 +79,7 @@ class Tambula{
 	 * @return void
 	 */
 	public function setLanguage(string $language){
-		$this->language = strtolower(substr($language, 0, 2));
+		$this->languageCode = strtolower(substr($language, 0, 2));
 	}
 
 	/**
@@ -172,8 +172,8 @@ class Tambula{
 	 */
 	private function findLanguageCode(array $route){
 		// Search for language
-		if(array_key_exists($this->language, $route)){
-			return $route[$this->language];
+		if(array_key_exists($this->languageCode, $route)){
+			return $route[$this->languageCode];
 		}
 
 		// Search for wildcard ('*')
