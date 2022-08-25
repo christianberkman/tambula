@@ -239,7 +239,7 @@ class Tambula{
 	public function findLanguageCodes(bool $findFirst = false){
 		// Find all two letter language codes in HTTP_ACCEPT_LANGUAGE string
 		$acceptedLang = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
-		$pattern = '/,([a-z]{2})/';
+		$pattern = '/([a-z]{2})/';
 		preg_match_all($pattern, $acceptedLang, $matches);
 
 		// Find only first
